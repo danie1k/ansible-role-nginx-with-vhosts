@@ -14,7 +14,7 @@
     - '^fastcgi_param\s+GATEWAY_INTERFACE'
     - '^fastcgi_param\s+SERVER_SOFTWARE'
 
-- name: "NGINX | SERVER | Remove Apache & nginx leftovers"
+- name: "NGINX | SERVER | Remove Apache & Nginx leftovers"
   file:
     path: "{{ item }}"
     state: absent
