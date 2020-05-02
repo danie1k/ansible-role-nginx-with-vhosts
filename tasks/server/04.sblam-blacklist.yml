@@ -1,0 +1,30 @@
+---
+# https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/
+# https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-
+
+- name: "NGINX | SERVER | Create SBLAM Blacklist update script"
+  copy:
+    src: sblam_blacklist.sh
+    dest: /usr/bin/sblam_blacklist.sh
+    owner: root
+    group: root
+    mode: a+x
+  register: sblam_blacklist_file
+  when: nginx_sblam_enabled
+
+- name: "NGINX | SERVER | Gather SBLAM Blacklist"  # noqa 503
+  shell: "/usr/bin/sblam_blacklist.sh > {{ nginx_conf_path }}/10.sblam.conf"
+  notify: reload nginx
+  when: nginx_sblam_enabled and sblam_blacklist_file.changed
+
+- name: "NGINX | SERVER | Run SBLAM Blacklist update once a day"
+  cron:
+    name: "SBLAM_BLACKLIST"
+    minute: "0"
+    hour: "7"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "/usr/bin/sblam_blacklist.sh > {{ nginx_conf_path }}/10.sblam.conf && nginx -s reload"
+    user: root
+  when: nginx_sblam_enabled

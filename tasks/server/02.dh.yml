@@ -1,0 +1,19 @@
+---
+
+- name: "NGINX | SERVER | Override ssl_dhparam file set by 'dev-sec.nginx-hardening'"
+  get_url:
+    url: https://ssl-config.mozilla.org/ffdhe2048.txt
+    dest: "/etc/nginx/dh{{ nginx_dh_size }}.pem"
+    mode: "u=rw,g=r"
+
+- name: "NGINX | SERVER | Ensure updating ssl_dhparam file once a week"
+  cron:
+    name: "SSL_DHPARAM_UPDATE"
+    minute: "0"
+    hour: "0"
+    day: "*"
+    month: "*"
+    weekday: "1"
+    job: "curl https://ssl-config.mozilla.org/ffdhe2048.txt > /etc/nginx/dh{{ nginx_dh_size }}.pem"
+    user: root
+  notify: restart nginx

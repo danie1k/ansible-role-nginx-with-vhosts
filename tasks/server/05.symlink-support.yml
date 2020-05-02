@@ -1,0 +1,7 @@
+---
+
+- name: "NGINX | SERVER | Adjust fastcgi.conf to understand symlinks"
+  replace:
+    path: /etc/nginx/fastcgi.conf
+    regexp: '\$document_root'
+    replace: '$realpath_root'

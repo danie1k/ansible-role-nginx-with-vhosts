@@ -1,0 +1,13 @@
+---
+
+- name: "Install, harden & configure Nginx web server (+ optional CloudFlare support)"
+  include_tasks: "server/{{ task_file }}"
+  with_items:
+    - 01.server.yml
+    - 02.dh.yml
+    - 03.cloudflare-real-ip.yml
+    - 04.sblam-blacklist.yml
+    - 05.symlink-support.yml
+    - 99.env-variables.yml
+  loop_control:
+    loop_var: task_file

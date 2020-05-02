@@ -1,0 +1,30 @@
+---
+# https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/
+# https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-
+
+- name: "NGINX | SERVER | Create Cloudflare IPs update script"
+  copy:
+    src: cloudflare_ips.sh
+    dest: /usr/bin/cloudflare_ips.sh
+    owner: root
+    group: root
+    mode: a+x
+  register: cloudflare_ips_file
+  when: nginx_cloudflare_enabled
+
+- name: "NGINX | SERVER | Gather Cloudflare IPs"  # noqa 503
+  shell: "/usr/bin/cloudflare_ips.sh > {{ nginx_conf_path }}/cloudflare.conf"
+  notify: reload nginx
+  when: nginx_cloudflare_enabled and cloudflare_ips_file.changed
+
+- name: "NGINX | SERVER | Run Cloudflare IPs update once a day"
+  cron:
+    name: "CLOUDFLARE_IPS"
+    minute: "0"
+    hour: "3"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "/usr/bin/cloudflare_ips.sh > {{ nginx_conf_path }}/cloudflare.conf && nginx -s reload"
+    user: root
+  when: nginx_cloudflare_enabled

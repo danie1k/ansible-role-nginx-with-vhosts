@@ -1,0 +1,31 @@
+---
+
+galaxy_info:
+  role_name: nginx_with_vhosts
+  author: danie1k
+  description: NGINX Web server for RHEL/CentOS
+  license: license (MIT)
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 8
+  galaxy_tags:
+    - centos
+    - development
+    - hardening
+    - nginx
+    - proxy
+    - rhel
+    - security
+    - system
+    - web
+
+dependencies:
+  # https://www.if-not-true-then-false.com/2011/nginx-and-php-fpm-configuration-and-optimizing-tips-and-tricks/
+  - name: geerlingguy.nginx
+    version: 2.7.0
+    vars:
+      nginx_vhosts: []
+  - name: dev-sec.nginx-hardening
+    version: 2.1.0

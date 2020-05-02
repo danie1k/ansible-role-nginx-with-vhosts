@@ -1,0 +1,14 @@
+---
+
+nginx_wv_packages_to_remove:
+  - apr
+  - apr-util
+  - httpd
+  - httpd-tools
+
+nginx_wv_paths_to_remove:
+  - /etc/httpd
+  - /etc/nginx/fastcgi_params
+  - /usr/share/nginx/html
+  - /var/log/httpd
+  - /var/www
