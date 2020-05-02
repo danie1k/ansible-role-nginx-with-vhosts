@@ -10,6 +10,8 @@ Installs [NGINX](https://unit.nginx.org/) web server and adds vhosts management 
 Role Variables
 --------------
 
+**server**
+
 | Variable name                        | Description                                                                                                 | Default value                                       |
 |--------------------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
 | nginx_cloudflare_enabled             | Enable CloudFlare integration?                                                                              | `false`                                             |
@@ -25,6 +27,16 @@ How to get CloudFlare SSL Origin Certificates: https://kb.virtubox.net/knowledge
 Check the following roles for more variables:
  * [geerlingguy.nginx](https://galaxy.ansible.com/geerlingguy/nginx)
  * [dev-sec.nginx-hardening](https://galaxy.ansible.com/dev-sec/nginx-hardening/)
+
+**vhosts**
+
+| Variable name                  | Description                                                        | Default value       |
+|--------------------------------|--------------------------------------------------------------------|---------------------|
+| nginx_vhost_user               | User - owner - for web applications files                          | `www-data`          |
+| nginx_vhost_user_ssh_key       | Local path to SSH key to be set for `nginx_vhost_user`             | `~/.ssh/id_rsa.pub` |
+| nginx_vhost_www_path           | Path on remote machine where all vhost-related data will be stored | `/var/www`          |
+| nginx_vhost_generic_error_page | Should use one global error page across all vhosts?                | `true`              |
+| nginx_vhost_generic_favicon    | Should use one global fallback favicon across all vhosts?          | `true`              |
 
 
 Example Playbook

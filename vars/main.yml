@@ -12,3 +12,66 @@ nginx_wv_paths_to_remove:
   - /usr/share/nginx/html
   - /var/log/httpd
   - /var/www
+
+nginx_vhost_obligatory_conf_path: /etc/nginx/vhost-obligatory-conf.d
+nginx_vhost_optional_conf_path: /etc/nginx/vhost-optional-conf.d
+
+nginx_vhost_definition_conf_path: "{{ nginx_vhost_www_path }}/conf.d"
+nginx_vhost_domain_store_path: "{{ nginx_vhost_www_path }}/domains"
+
+nginx_gzip_types:
+  - text/css
+  - text/x-component
+  - application/x-javascript
+  - application/javascript
+  - text/javascript
+  - text/x-js
+  - text/richtext
+  - image/svg+xml
+  - text/plain
+  - text/xsd
+  - text/xsl
+  - text/xml
+  - image/x-icon
+
+nginx_static_files:
+  - bmp
+  - bz2
+  - css
+  - doc
+  - eot
+  - exe
+  - flac
+  - gif
+  - gz
+  - ico
+  - jpeg
+  - jpg
+  - js
+  - mid
+  - midi
+  - mp3
+  - mp4
+  - ogg
+  - ogv
+  - otf
+  - pdf
+  - png
+  - ppt
+  - rar
+  - rss
+  - rtf
+  - svg
+  - svgz
+  - tar
+  - tgz
+  - ttc
+  - ttf
+  - wav
+  - webm
+  - woff
+  - woff2
+  - xls
+  - xml
+  - xsl
+  - zip

@@ -1,0 +1,19 @@
+---
+
+- name: "NGINX | VHOST | Copy generic favicon file"
+  copy:
+    src: vhost-favicon.ico
+    dest: "{{ nginx_vhost_www_path }}/favicon.ico"
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_vhost_user }}"
+    mode: "ug=rw,o=r"
+  when: nginx_vhost_generic_favicon
+
+- name: "NGINX | VHOST | Copy generic favicon vhost config"
+  template:
+    src: vhost_obligatory_conf/favicon.conf
+    dest: "{{ nginx_vhost_obligatory_conf_path }}/01.favicon.conf"
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rw,g=r"
+  notify: reload nginx

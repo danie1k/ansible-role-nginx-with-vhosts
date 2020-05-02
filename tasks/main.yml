@@ -11,3 +11,14 @@
     - 99.env-variables.yml
   loop_control:
     loop_var: task_file
+
+- name: "Configure Nginx to easily handle vhosts"
+  include_tasks: "vhost/{{ task_file }}"
+  with_items:
+    - 01.vhost-owner-user.yml
+    - 02.shared-config.yml
+    - 03.vhost-error-page.yml
+    - 04.vhost-favicon.yml
+    - 99.env-variables.yml
+  loop_control:
+    loop_var: task_file

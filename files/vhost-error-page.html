@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.0.45/css/materialdesignicons.min.css"
+          integrity="sha256-nRyVCcVDSlWN9d68r9M+rKBLE4k9Cp1j3XSY/umjvvU=" crossorigin="anonymous">
+    <title><!--# echo var="status" --> <!--# echo var="status_name" --></title><!--# if expr="$status = 502" -->
+    <meta http-equiv="refresh" content="2"><!--# endif -->
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style type="text/css">body, html {
+        position: relative;
+        background: #6022aa;
+        background: linear-gradient(180deg, #6022aa 5%, <!-- # if expr="$status = /^4/" --> #5e32d7 <!-- # else --> #c1375e <!-- # endif --> 75%, #8552c4 95%);
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center
+    }
+
+    a:active, a:link, a:visited, body {
+        color: #fff;
+        text-shadow: 0 0 10px #441280;
+        text-decoration: none
+    }
+
+    .a {
+        text-align: center;
+        position: relative
+    }
+
+    .b {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center
+    }
+
+    .c {
+        font-size: 1.2rem;
+        font-weight: lighter;
+        max-width: 45rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .d {
+        position: relative
+    }
+
+    .e {
+        font-size: 16rem;
+        line-height: 1
+    }
+
+    .f a {
+        display: inline-block;
+        font-size: 2rem;
+        padding: 0 .3rem
+    }</style>
+</head>
+<body>
+<div class="a">
+    <div class="d"><span class="e mdi <!--# if expr=" $status=/^4/" -->mdi-cogs mdi-rotate-90<!--# else -->mdi-server-off<!--# endif -->"></span></div>
+    <h1 class="b"><!--# echo var="status" --> <!--# echo var="status_name" --></h1>
+    <p class="c"><!--# echo var="status_description" --></p></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+---
+
+- name: "NGINX | VHOST | Copy generic error page Nginx config"
+  # https://blog.adriaan.io/one-nginx-error-page-to-rule-them-all.html
+  # https://github.com/pallets/werkzeug/blob/master/src/werkzeug/exceptions.py
+  copy:
+    src: nginx-error-page.conf
+    dest: "{{ nginx_conf_path }}/error-page.conf"
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rw,g=r"
+  notify: reload nginx
+  when: nginx_vhost_generic_error_page
+
+- name: "NGINX | VHOST | Copy generic error page html"
+  copy:
+    src: vhost-error-page.html
+    dest: "{{ nginx_vhost_www_path }}/error-page.html"
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_vhost_user }}"
+    mode: "ug=rw,o=r"
+  when: nginx_vhost_generic_error_page
+
+- name: "NGINX | VHOST | Copy generic error page vhost config"
+  template:
+    src: vhost_obligatory_conf/error-page.conf
+    dest: "{{ nginx_vhost_obligatory_conf_path }}/01.error-page.conf"
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rw,g=r"
+  notify: reload nginx
+  when: nginx_vhost_generic_error_page

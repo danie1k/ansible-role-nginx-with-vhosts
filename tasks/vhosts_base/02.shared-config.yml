@@ -1,0 +1,44 @@
+---
+
+- name: "NGINX | VHOST | Ensure vhosts config directories exists"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rwx,grx,o=x"
+  with_items:
+    - "{{ nginx_vhost_optional_conf_path }}"
+    - "{{ nginx_vhost_obligatory_conf_path }}"
+  register: vhosts_config_directories
+
+- name: "NGINX | VHOST | Set the SELinux security context on vhosts config directories"  # noqa 305 503
+  shell: "chcon -Rt httpd_config_t {{ item }}"
+  with_items:
+    - "{{ nginx_vhost_optional_conf_path }}"
+    - "{{ nginx_vhost_obligatory_conf_path }}"
+  when: ansible_selinux.status == "enabled" and vhosts_config_directories.changed
+
+- name: "NGINX | VHOST | Copy obligatory config files"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ nginx_vhost_obligatory_conf_path }}/{{ item.target }}"
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rw,g=r"
+  with_items:
+    - { src: vhost_obligatory_conf/locations.conf, target: 01.locations.conf }
+    - { src: vhost_obligatory_conf/statics.conf, target: 02.statics.conf }
+    - { src: vhost_obligatory_conf/cors.conf, target: 03.cors.conf }
+  notify: reload nginx
+
+- name: "NGINX | VHOST | Copy optional config files"
+  template:
+    src: "{{ item }}"
+    dest: "{{ nginx_vhost_optional_conf_path }}/"
+    owner: "{{ nginx_user }}"
+    group: root
+    mode: "u=rw,g=r"
+  with_items:
+    - vhost_optional_conf/fastcgi.conf
+    - vhost_optional_conf/gzip.conf
