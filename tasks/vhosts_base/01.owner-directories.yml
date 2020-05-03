@@ -2,7 +2,7 @@
 
 - name: "NGINX | VHOST | Create vhost owner directories"
   file:
-    name: "{{ nginx_vhost_domain_store_path }}"
+    name: "{{ item }}"
     state: directory
     owner: "{{ nginx_user }}"
     group: "{{ nginx_vhost_user }}"
