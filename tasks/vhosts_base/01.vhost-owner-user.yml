@@ -5,11 +5,22 @@
     name: "{{ nginx_vhost_user }}"
     password: !
     home: "{{ nginx_vhost_www_path }}"
-    groups: "{{ ssh_allow_groups }}"
+    groups: "{{ nginx_vhost_user_extra_groups }}"
     append: true
     shell: /bin/bash
     state: present
   register: nginx_vhost_user_created
+  when: nginx_vhost_user_extra_groups
+
+- name: "NGINX | VHOST | Create www data user"
+  user:
+    name: "{{ nginx_vhost_user }}"
+    password: !
+    home: "{{ nginx_vhost_www_path }}"
+    shell: /bin/bash
+    state: present
+  register: nginx_vhost_user_created
+  when: not nginx_vhost_user_extra_groups
 
 - name: "NGINX | VHOST | Add authorized SSH key to www data user"  # noqa 503
   authorized_key:

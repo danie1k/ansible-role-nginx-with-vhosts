@@ -13,6 +13,7 @@ nginx_ssl_trusted_certificate: /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
 # vhosts_base
 nginx_vhost_user: www-data
+nginx_vhost_user_extra_groups: []
 nginx_vhost_user_ssh_key: ~/.ssh/id_rsa.pub
 nginx_vhost_www_path: /var/www
 nginx_vhost_generic_error_page: true

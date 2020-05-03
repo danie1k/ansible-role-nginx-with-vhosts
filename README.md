@@ -33,6 +33,7 @@ Check the following roles for more variables:
 | Variable name                  | Description                                                        | Default value       |
 |--------------------------------|--------------------------------------------------------------------|---------------------|
 | nginx_vhost_user               | User - owner - for web applications files                          | `www-data`          |
+| nginx_vhost_user_extra_groups  | Extra groups to be set for the `nginx_vhost_user`                  | `[]`                |
 | nginx_vhost_user_ssh_key       | Local path to SSH key to be set for `nginx_vhost_user`             | `~/.ssh/id_rsa.pub` |
 | nginx_vhost_www_path           | Path on remote machine where all vhost-related data will be stored | `/var/www`          |
 | nginx_vhost_generic_error_page | Should use one global error page across all vhosts?                | `true`              |
