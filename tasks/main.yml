@@ -1,5 +1,11 @@
 ---
 
+- name: "Check if required variables are set"
+  assert:
+    that:
+      - (nginx_vhost_user is defined) and nginx_vhost_user
+      - (nginx_vhost_www_path is defined) and nginx_vhost_www_path
+
 - name: "Install, harden & configure Nginx web server (+ optional CloudFlare support)"
   include_tasks: "server/{{ task_file }}"
   with_items:
@@ -15,7 +21,7 @@
 - name: "Configure Nginx to easily handle vhosts"
   include_tasks: "vhost/{{ task_file }}"
   with_items:
-    - 01.vhost-owner-user.yml
+    - 01.owner-directories.yml
     - 02.shared-config.yml
     - 03.vhost-error-page.yml
     - 04.vhost-favicon.yml

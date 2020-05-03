@@ -1,0 +1,27 @@
+---
+
+- name: "NGINX | VHOST | Create vhost owner directories"
+  file:
+    name: "{{ nginx_vhost_domain_store_path }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_vhost_user }}"
+    mode: "ug=rwx,o=rx"
+  with_items:
+    - "{{ nginx_vhost_definition_conf_path }}"
+    - "{{ nginx_vhost_domain_store_path }}"
+
+- name: "NGINX | VHOST | Add vhosts config path to main nginx.conf"
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    insertafter: '\s+include {{ nginx_conf_path }}/\*\.conf;$'
+    line: '    include {{ nginx_vhost_definition_conf_path }}/*.conf;'
+    state: present
+  notify: reload nginx
+
+- name: "NGINX | VHOST | Set the SELinux security context"  # noqa 305
+  shell: "chcon -Rt {{ item.context }} {{ item.path }}"
+  with_items:
+    - { path: "{{ nginx_vhost_definition_conf_path }}", context: httpd_config_t }
+    - { path: "{{ nginx_vhost_domain_store_path }}", context: httpd_sys_rw_content_t }
+  when: ansible_selinux.status == "enabled"

@@ -30,14 +30,12 @@ Check the following roles for more variables:
 
 **vhosts**
 
-| Variable name                  | Description                                                        | Default value       |
-|--------------------------------|--------------------------------------------------------------------|---------------------|
-| nginx_vhost_user               | User - owner - for web applications files                          | `www-data`          |
-| nginx_vhost_user_extra_groups  | Extra groups to be set for the `nginx_vhost_user`                  | `[]`                |
-| nginx_vhost_user_ssh_key       | Local path to SSH key to be set for `nginx_vhost_user`             | `~/.ssh/id_rsa.pub` |
-| nginx_vhost_www_path           | Path on remote machine where all vhost-related data will be stored | `/var/www`          |
-| nginx_vhost_generic_error_page | Should use one global error page across all vhosts?                | `true`              |
-| nginx_vhost_generic_favicon    | Should use one global fallback favicon across all vhosts?          | `true`              |
+| Variable name                    | Description                                                                                        | Default value     |
+|----------------------------------|----------------------------------------------------------------------------------------------------|-------------------|
+| `nginx_vhost_user`               | Name of existing remote host user, who will be an owner of your vhosts web files                   | - **(Required!)** |
+| `nginx_vhost_www_path`           | Path on remote machine where all vhost-related data will be stored and owned by `nginx_vhost_user` | - **(Required!)** |
+| `nginx_vhost_generic_error_page` | Should use one global error page across all vhosts?                                                | `true`            |
+| `nginx_vhost_generic_favicon`    | Should use one global fallback favicon across all vhosts?                                          | `true`            |
 
 
 Example Playbook
@@ -48,7 +46,8 @@ Example Playbook
   roles:
      - name: danie1k.nginx_with_vhosts
        vars:
-         nginx_cloudflare_enabled: true
+         nginx_vhost_user: www-data
+         nginx_vhost_www_path: /var/www
 ```
 
 License
