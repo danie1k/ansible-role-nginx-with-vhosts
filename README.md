@@ -1,5 +1,5 @@
-nginx-with-vhosts
-=================
+Ansible Role: danie1k.nginx_with_vhosts
+=======================================
 
 [![Build Status](https://img.shields.io/travis/danie1k/ansible-role-nginx-with-vhosts)][1]
 [![MIT License](https://img.shields.io/github/license/danie1k/ansible-role-nginx-with-vhosts)][2]
