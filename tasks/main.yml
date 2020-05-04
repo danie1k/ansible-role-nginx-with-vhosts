@@ -14,6 +14,7 @@
     - 03.cloudflare-real-ip.yml
     - 04.sblam-blacklist.yml
     - 05.symlink-support.yml
+    - 06.graceful.yml
     - 99.env-variables.yml
   loop_control:
     loop_var: task_file

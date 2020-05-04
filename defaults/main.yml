@@ -1,6 +1,7 @@
 ---
 
 # server
+nginx_add_graceful_command: false
 nginx_cloudflare_enabled: false
 nginx_cloudflare_ssl_certificate: /etc/ssl/certs/cert.pem
 nginx_cloudflare_ssl_certificate_key: /etc/ssl/private/key.pem

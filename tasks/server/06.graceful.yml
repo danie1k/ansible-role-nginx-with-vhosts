@@ -1,0 +1,12 @@
+---
+
+- name: "NGINX | SERVER | Add 'graceful' command to remote system"
+  copy:
+    dest: /usr/local/bin/graceful
+    content: |
+      #!/usr/bin/env bash
+      set -e
+      sudo /sbin/nginx -t && sudo /sbin/nginx -s reload && echo "OK"
+    force: true
+    mode: "+x"
+  when: nginx_add_graceful_command

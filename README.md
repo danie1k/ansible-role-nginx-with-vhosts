@@ -14,6 +14,7 @@ Role Variables
 
 | Variable name                        | Description                                                                                                 | Default value                                       |
 |--------------------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| nginx_add_graceful_command           | Add `graceful` command to remote system? It's meant to be used by non-root users to **reload** Nginx server | `false`                                             |
 | nginx_cloudflare_enabled             | Enable CloudFlare integration?                                                                              | `false`                                             |
 | nginx_cloudflare_ssl_certificate     | A file with the certificate in the PEM format for the given virtual server                                  | `/etc/ssl/certs/cert.pem`                           |
 | nginx_cloudflare_ssl_certificate_key | A file with the secret key in the PEM format for the given virtual server                                   | `/etc/ssl/private/key.pem`                          |
