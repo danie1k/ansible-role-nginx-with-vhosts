@@ -1,5 +1,8 @@
 ---
 
+- stat: path=/etc/php-fpm.conf
+  register: php_fpm_conf_stat
+
 - name: "NGINX | VHOST | Create vhost owner directories"
   file:
     name: "{{ item }}"
@@ -10,6 +13,7 @@
   with_items:
     - "{{ nginx_vhost_definition_conf_path }}"
     - "{{ nginx_vhost_domain_store_path }}"
+    - "{{ nginx_vhost_php_fpm_conf_path }}"
 
 - name: "NGINX | VHOST | Add vhosts config path to main nginx.conf"
   lineinfile:
@@ -18,6 +22,14 @@
     line: '    include {{ nginx_vhost_definition_conf_path }}/*.conf;'
     state: present
   notify: reload nginx
+
+- name: "NGINX | VHOST | Add php-fpm config path to main php-fpm.conf"
+  lineinfile:
+    dest: /etc/php-fpm.conf
+    insertafter: 'include=\/etc\/php-fpm\.d\/\*\.conf$'
+    line: 'include={{ nginx_vhost_php_fpm_conf_path }}/*.conf;'
+    state: present
+  when: php_fpm_conf_stat.stat.exists
 
 - name: "NGINX | VHOST | Set the SELinux security context"  # noqa 305
   shell: "chcon -Rt {{ item.context }} {{ item.path }}"

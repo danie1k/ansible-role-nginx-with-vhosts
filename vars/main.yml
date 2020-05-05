@@ -16,6 +16,7 @@ nginx_vhost_obligatory_conf_path: /etc/nginx/vhost-obligatory-conf.d
 nginx_vhost_optional_conf_path: /etc/nginx/vhost-optional-conf.d
 
 nginx_vhost_definition_conf_path: "{{ nginx_vhost_www_path }}/conf.d"
+nginx_vhost_php_fpm_conf_path: "{{ nginx_vhost_www_path }}/php-fpm.d"
 nginx_vhost_domain_store_path: "{{ nginx_vhost_www_path }}/domains"
 
 nginx_gzip_types:
