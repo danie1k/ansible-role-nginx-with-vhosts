@@ -20,7 +20,7 @@
     loop_var: task_file
 
 - name: "Configure Nginx to easily handle vhosts"
-  include_tasks: "vhost/{{ task_file }}"
+  include_tasks: "vhosts_base/{{ task_file }}"
   with_items:
     - 01.owner-directories.yml
     - 02.shared-config.yml
